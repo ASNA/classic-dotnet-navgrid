@@ -20,7 +20,7 @@ INITPROP NAME(Strikethrough) TYPE(*BOOLEAN) VALUE(0)
 ENDPROP
 INITPROP NAME(StartUpPosition) TYPE(*INTEGER2) VALUE(1)
 INITPROP NAME(CreationID) TYPE(*BASICSTRING) VALUE('{BE755B52-EDC3-4801-AA40-8FE751378CD2}')
-INITPROP NAME(ModifiedID) TYPE(*BASICSTRING) VALUE('{62E5FE9F-FA82-4686-869F-820F6577B267}')
+INITPROP NAME(ModifiedID) TYPE(*BASICSTRING) VALUE('{A7F04974-D735-4E42-ABBC-C10D2E3F4204}')
 DCLMENU PARENT(formMain) // mnuForm1
 INITPROP NAME(_Version) TYPE(*INTEGER4) VALUE(131176)
 INITPROP NAME(Name) TYPE(*BASICSTRING) VALUE('mnuForm1')
@@ -499,6 +499,7 @@ END
 // with OpnQryF--open the file after assigning the QryKeyFlds and 
 // QrySelect values. Always use `'*UNIQUE'` for the `QryFilename.`
 
+// [See file schema here.](http://1clickurls.com/yT1m-Mq)
 DclDiskFile  Name(Cust) +
              Type(*INPUT) +
              Org(*INDEXED) +
