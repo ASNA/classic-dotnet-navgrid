@@ -20,7 +20,7 @@ INITPROP NAME(Strikethrough) TYPE(*BOOLEAN) VALUE(0)
 ENDPROP
 INITPROP NAME(StartUpPosition) TYPE(*INTEGER2) VALUE(1)
 INITPROP NAME(CreationID) TYPE(*BASICSTRING) VALUE('{BE755B52-EDC3-4801-AA40-8FE751378CD2}')
-INITPROP NAME(ModifiedID) TYPE(*BASICSTRING) VALUE('{CF4742FB-6EFE-4BBA-A0E2-D26EFA278250}')
+INITPROP NAME(ModifiedID) TYPE(*BASICSTRING) VALUE('{D0ADF166-E92F-48B9-8C51-0FCF98145982}')
 DCLMENU PARENT(formMain) // mnuForm1
 INITPROP NAME(_Version) TYPE(*INTEGER4) VALUE(131176)
 INITPROP NAME(Name) TYPE(*BASICSTRING) VALUE('mnuForm1')
@@ -489,8 +489,7 @@ INITPROP NAME(Strikethrough) TYPE(*BOOLEAN) VALUE(0)
 ENDPROP
 END
 // [Return to repo](https://github.com/ASNA/classic-dotnet-navgrid)
-// ### AVR Classic program to demonstrate a simple subfile 
-// for navigational purposes. 
+// ### AVR Classic program to demonstrate a simple subfile for customer selection.
 // ---
 // ![](screen-shot-01.png?1)
 // ---
