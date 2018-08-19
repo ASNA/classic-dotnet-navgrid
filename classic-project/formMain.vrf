@@ -3,11 +3,11 @@ DCLFORM // formMain
 INITPROP NAME(_Version) TYPE(*INTEGER4) VALUE(131181)
 INITPROP NAME(BorderStyle) TYPE(*INTEGER2) VALUE(1)
 INITPROP NAME(Caption) TYPE(*BASICSTRING) VALUE('AVR basic subfile example')
-INITPROP NAME(Height) TYPE(*INTEGER4) VALUE(7785)
-INITPROP NAME(Left) TYPE(*INTEGER4) VALUE(2145)
+INITPROP NAME(Height) TYPE(*INTEGER4) VALUE(6195)
+INITPROP NAME(Left) TYPE(*INTEGER4) VALUE(4185)
 INITPROP NAME(MaxButton) TYPE(*BOOLEAN) VALUE(0)
 INITPROP NAME(Name) TYPE(*BASICSTRING) VALUE('formMain')
-INITPROP NAME(Top) TYPE(*INTEGER4) VALUE(2265)
+INITPROP NAME(Top) TYPE(*INTEGER4) VALUE(7410)
 INITPROP NAME(Width) TYPE(*INTEGER4) VALUE(13455)
 DCLPROP NAME(Font) TYPE(*BLOBPROPSET) CLSID('{0BE35203-8F91-11CE-9DE3-00AA004BB851}')
 INITPROP NAME(Name) TYPE(*BASICSTRING) VALUE('MS Sans Serif')
@@ -20,25 +20,25 @@ INITPROP NAME(Strikethrough) TYPE(*BOOLEAN) VALUE(0)
 ENDPROP
 INITPROP NAME(StartUpPosition) TYPE(*INTEGER2) VALUE(1)
 INITPROP NAME(CreationID) TYPE(*BASICSTRING) VALUE('{BE755B52-EDC3-4801-AA40-8FE751378CD2}')
-INITPROP NAME(ModifiedID) TYPE(*BASICSTRING) VALUE('{5DDBFC25-CD16-425E-B60E-F4B6C4421F2E}')
+INITPROP NAME(ModifiedID) TYPE(*BASICSTRING) VALUE('{62E5FE9F-FA82-4686-869F-820F6577B267}')
 DCLMENU PARENT(formMain) // mnuForm1
 INITPROP NAME(_Version) TYPE(*INTEGER4) VALUE(131176)
 INITPROP NAME(Name) TYPE(*BASICSTRING) VALUE('mnuForm1')
 DCLCTL CLSID('{9A54166B-88B8-11CF-A6E2-00801E0111FB}') PARENT(formMain) // sbfCust
 INITPROP NAME(Version) TYPE(*INTEGER4) VALUE(131181)
 INITPROP NAME(_PersistType) TYPE(*INTEGER2) VALUE(3)
-INITPROP NAME(Height) TYPE(*INTEGER4) VALUE(4950)
+INITPROP NAME(Height) TYPE(*INTEGER4) VALUE(5130)
 INITPROP NAME(Left) TYPE(*INTEGER4) VALUE(180)
 INITPROP NAME(Name) TYPE(*BASICSTRING) VALUE('sbfCust')
 INITPROP NAME(Top) TYPE(*INTEGER4) VALUE(2070)
-INITPROP NAME(Width) TYPE(*INTEGER4) VALUE(12240)
+INITPROP NAME(Width) TYPE(*INTEGER4) VALUE(12600)
 INITPROP NAME(TabIndex) TYPE(*INTEGER2) VALUE(0)
 INITPROP NAME(LicKey) TYPE(*BASICSTRING) VALUE('No License Key')
 INITPROP NAME(ServerName) TYPE(*BASICSTRING) VALUE('avrrt31.dll')
 INITPROP NAME(DftPropType) TYPE(*INTEGER2) VALUE(2)
 INITPROP NAME(_Version) TYPE(*INTEGER4) VALUE(131177)
-INITPROP NAME(_ExtentX) TYPE(*INTEGER4) VALUE(21590)
-INITPROP NAME(_ExtentY) TYPE(*INTEGER4) VALUE(8731)
+INITPROP NAME(_ExtentX) TYPE(*INTEGER4) VALUE(22225)
+INITPROP NAME(_ExtentY) TYPE(*INTEGER4) VALUE(9049)
 INITPROP NAME(_StockProps) TYPE(*INTEGER4) VALUE(205)
 INITPROP NAME(ForeColor) TYPE(*INTEGER4) VALUE(-2147483640)
 INITPROP NAME(BackColor) TYPE(*INTEGER4) VALUE(-2147483643)
@@ -81,7 +81,7 @@ INITPROP NAME(Type1) TYPE(*INTEGER2) VALUE(0)
 INITPROP NAME(IntegralCount1) TYPE(*INTEGER2) VALUE(40)
 INITPROP NAME(DecimalCount1) TYPE(*INTEGER2) VALUE(0)
 INITPROP NAME(ColHeading1) TYPE(*BASICSTRING) VALUE('Name')
-INITPROP NAME(ColWidth1) TYPE(*INTEGER2) VALUE(5000)
+INITPROP NAME(ColWidth1) TYPE(*INTEGER2) VALUE(6200)
 INITPROP NAME(EditCode1) TYPE(*INTEGER2) VALUE(0)
 INITPROP NAME(EditWord1) TYPE(*BASICSTRING) VALUE('')
 INITPROP NAME(Browse1) TYPE(*BOOLEAN) VALUE(0)
@@ -96,7 +96,7 @@ INITPROP NAME(Type2) TYPE(*INTEGER2) VALUE(0)
 INITPROP NAME(IntegralCount2) TYPE(*INTEGER2) VALUE(35)
 INITPROP NAME(DecimalCount2) TYPE(*INTEGER2) VALUE(0)
 INITPROP NAME(ColHeading2) TYPE(*BASICSTRING) VALUE('Address')
-INITPROP NAME(ColWidth2) TYPE(*INTEGER2) VALUE(4500)
+INITPROP NAME(ColWidth2) TYPE(*INTEGER2) VALUE(6200)
 INITPROP NAME(EditCode2) TYPE(*INTEGER2) VALUE(0)
 INITPROP NAME(EditWord2) TYPE(*BASICSTRING) VALUE('')
 INITPROP NAME(Browse2) TYPE(*BOOLEAN) VALUE(0)
@@ -433,12 +433,12 @@ INITPROP NAME(Underline) TYPE(*BOOLEAN) VALUE(0)
 INITPROP NAME(Italic) TYPE(*BOOLEAN) VALUE(0)
 INITPROP NAME(Strikethrough) TYPE(*BOOLEAN) VALUE(0)
 ENDPROP
-DCLCTL CLSID('{9A54164B-88B8-11CF-A6E2-00801E0111FB}') PARENT(Frame1) // ioPositionTo
+DCLCTL CLSID('{9A54164B-88B8-11CF-A6E2-00801E0111FB}') PARENT(Frame1) // textboxPositionTo
 INITPROP NAME(Version) TYPE(*INTEGER4) VALUE(131181)
 INITPROP NAME(_PersistType) TYPE(*INTEGER2) VALUE(3)
 INITPROP NAME(Height) TYPE(*INTEGER4) VALUE(432)
 INITPROP NAME(Left) TYPE(*INTEGER4) VALUE(360)
-INITPROP NAME(Name) TYPE(*BASICSTRING) VALUE('ioPositionTo')
+INITPROP NAME(Name) TYPE(*BASICSTRING) VALUE('textboxPositionTo')
 INITPROP NAME(Top) TYPE(*INTEGER4) VALUE(360)
 INITPROP NAME(Width) TYPE(*INTEGER4) VALUE(2880)
 INITPROP NAME(TabIndex) TYPE(*INTEGER2) VALUE(9)
@@ -499,76 +499,57 @@ END
 // with OpnQryF--open the file after assigning the QryKeyFlds and 
 // QrySelect values. Always use `'*UNIQUE'` for the `QryFilename.`
 
-DclDiskFile  Name( Cust ) +
-             Type( *INPUT ) +
-             Org( *INDEXED ) +
-             Prefix( Cust_ ) +
-             NetBlockFactor( *Calc ) +
-             ImpOpen( *Yes ) +
-             AddRec( *No ) +
-             FileDesc( '*Libl/CMMasterL2' ) +
-             DBDesc( 'ASNA Local DB' )
+DclDiskFile  Name(Cust) +
+             Type(*INPUT) +
+             Org(*INDEXED) +
+             Prefix(Cust_) +
+             NetBlockFactor(*Calc) +
+             ImpOpen(*Yes) +
+             AddRec(*No) +
+             FileDesc('Examples/CMastNewL2') +
+             DBDesc('*PUBLIC/DG NET Local')
  
-DclDS CustDS  ExtDesc( *Yes ) +
-                    FileDesc( '*Libl/CMMasterL2' ) +
-                    DBDesc( 'ASNA Local DB' ) +
-                    Prefix( Cust_ )
+DclDS CustDS  ExtDesc(*Yes) +
+              FileDesc('Examples/CMastNewL2') +
+              DBDesc('*PUBLIC/DG NET Local') +
+              Prefix(Cust_)
  
-DclDS sbfCustDS  ExtDesc( *Yes ) +
-                    FileDesc( '*Libl/CMMasterL2' ) +
-                    DBDesc( 'ASNA Local DB' ) +
-                    Prefix( sbfCust_ )
+DclDS sbfCustDS  ExtDesc(*Yes) +
+                 FileDesc('Examples/CMastNewL2') +
+                 DBDesc('*PUBLIC/DG NET Local') +
+                 Prefix(sbfCust_)
  
-DclConst BUFFER Value( 10 )
+DclConst SUBFILE_ROWS Value(12)
  
 // Basic navigational subfile.
 sbfCust_Refresh()
  
 // Event handlers
-BegSr ioPositionTo KeyPress
-    // Cap first key for position-to and call position-to on Enter key.
+
+// Watch for keypress in the textboxPositionTo textbox. 
+BegSr textboxPositionTo KeyPress
     DclSrParm KeyAscii TYPE(*INTEGER) LEN(2) BY(*REFERENCE)
  
-    // Requires ioField named ioPositionTo.
- 
-    DclConst LOWER_A   Value(  97 )
-    DclConst LOWER_Z   Value( 122 )
-    DclConst CASE_DIFF Value(  32 )
-    DclConst ENTER_KEY Value(  13 )
-    DclConst EAT_KEY   Value(   0 )
- 
-    // Force first character only to upper case.
-    If ( KeyAscii >= LOWER_A          ) AND  +
-       ( KeyAscii <= LOWER_Z          ) AND  +
-       ( ioPositionTo.SelStart = 0    )
-        KeyAscii = KeyAscii - CASE_DIFF
-    EndIf
- 
-    If ( KeyAscii = ENTER_KEY )
+    DclConst ENTER_KEY Value( 13)
+    DclConst EAT_KEY   Value(  0)
+
+    // Watch for an Enter keypress when ioPosition has 
+    // focus. End the keypress event handler by setting 
+    // KeyAscii to EAT_KEY (0) and then position the subfile.  
+    If (KeyAscii = ENTER_KEY)
         KeyAscii = EAT_KEY
-        sbfCust_PositionTo( ioPositionTo.Value )
-        ioPositionTo.Value = *Blanks
+        sbfCust_PositionTo(textboxPositionTo.Value)
+        textboxPositionTo.Value = *Blanks
     EndIf
 EndSr
- 
-BegSr sbfCust Bottom
-    // User moved to bottom row of subfile.
-    //SetGT Cust Key( sbfCust_CMName )
-    //ExSr sbfCust_FillNext
-    LeaveSr 
-    sbfCust_Init()
-    sbfCust_FillNext()
-    sbfCust.SetFocus()
-    sbfCust_GoToTopRow()
-EndSr
- 
+
 BegSr sbfCust RecSwitch
     // Row position was changed in the subfile.
     // Read the current subfile record.
-    DclSrParm FromRec  Type( *INTEGER ) LEN( 4 )
+    DclSrParm FromRec  Type(*INTEGER) LEN(4)
  
     // Read subfile record on every subfile record switch
-    Chain sbfCust Key( sbfCust.Row + 1 ) NotFnd( *In50 )
+    Chain sbfCust Key(sbfCust.Row + 1) NotFnd(*In50)
  
     sbfCust_RRN = sbfCust.RowCount
  
@@ -578,105 +559,69 @@ EndSr
  
 BegSr sbfCust SelChanging
     // Inhibit user moving to heading row of subfile.
-    DclConst  HEADING_ROW   Value( -1 )
+    DclConst  HEADING_ROW   Value(-1)
  
-    If ( sbfCust.Row = HEADING_ROW )
+    If (sbfCust.Row = HEADING_ROW)
         ExSr sbfCust_GoToTopRow
     EndIf
 EndSr
- 
-BegSr sbfCust Top
-    // User moved to top row of subfile.
-    ExSr sbfCust_FillPrev
-EndSr
- 
-// sbfCust subroutines
+
 BegSr sbfCust_Init
-    // Initialize subfile.
+    // Initialize and clear subfile.
     sbfCust_RRN = 0
     sbfCust.ClearObj()
 EndSr
  
 BegSr sbfCust_FillNext
-    // Fill sbfCust with BufferSize records.
-    DclFld BufferSize Type( *Integer ) Len( 4 )
-    DclFld Idx        Type( *Integer ) Len( 4 )
-    DclFld RowColor   Type( *Integer ) Len( 4 )
+    // Fill sbfCust with next group of rows.
+    DclFld Idx        Type(*Integer) Len(4)
+    DclFld RowColor   Type(*Integer) Len(4)
 
-    //LeaveSr
- 
-    // Number of records to put in subfile at one time.
-    BufferSize = BUFFER
- 
-    Do FromVal(1) ToVal(BufferSize) Index(Idx)
+    Do FromVal(1) ToVal(SUBFILE_ROWS) Index(Idx)
         Read Cust
-        If ( %EOF(Cust))
+        If (%EOF(Cust))
             LeaveSr
         EndIf
         sbfCust_RRN = sbfCust.RowCount + 1
         sbfCust_SetFields()
         Write sbfCust
- 
+
         RowColor = SetRowColor(sbfCust_RRN - 1, RowColor)
     EndDo
 EndSr
- 
-BegSr sbfCust_FillPrev
-    // Add previous x records to subfile.
-    DclFld BegOfFile  Type( *Boolean )
-    DclFld BufferSize Type( *Integer ) Len( 4 )
-    DclFld NewRow     Type( *Integer ) Len( 4 )
-    DclFld RecsRead   Type( *Integer ) Len( 4 )
-    DclFld RowColor   Type( *Integer ) Len( 4 )
- 
 
-    LeaveSr
-    Eval F2( RowColor = sbfCust.RecBackColor[ 0 ] ) Err( *Extended )
- 
-    BufferSize = BUFFER
-    SetLL Cust Key( sbfCust_CMName )
-    RecsRead = 0
-    Do FromVal( 1 ) ToVal( BufferSize )
-        ReadP Cust BOF( BegOfFile )
-        If ( BegOfFile )
-            Leave
-        EndIf
- 
-        RecsRead    = RecsRead + 1
-        NewRow      = sbfCust.AddItem( '', 0 )
-        Chain sbfCust Key( NewRow + 1 )
-        sbfCust_SetFields()
-        Update sbfCust
- 
-        sbfCust_RRN = sbfCust.RowCount + 1
-        RowColor    = SetRowColor( NewRow, RowColor )
-    EndDo
- 
-    If ( RecsRead > 0 )
-        sbfCust.Select( RecsRead, sbfCust.Col )
-        sbfCust.FirstRow = RecsRead
-    EndIf
-EndSr
- 
+// Go to top row of subfile.
 BegSr sbfCust_GoToTopRow
-    // Go to top row of subfile.
-    DclConst TOP_ROW   Value(0)
-    Eval F2( sbfCust.Select(TOP_ROW, sbfCust.Col))  Err( *Extended )
+    DclConst TOP_ROW Value(0)
+    DclConst LEFT_MOST_COLUMN Value(0)
+    // The Select method selects the given row of the subfile. 
+    // If there are no rows in the subfile, the Select method
+    // fails. Wrapping it an Eval statement and using 
+    // Err(*Extended) 'eats' the error letting Select method 
+    // fail silently. 
+    // You need to provide a zero-based row and column to the 
+    // Select method. Zero is the top row and zero is the left-most 
+    // column. Constants are used to avoid using "magic numbers" 
+    // that be confusing later. 
+
+    Eval F2(sbfCust.Select(TOP_ROW, LEFT_MOST_COLUMN)) Err(*Extended)
 EndSr
  
-BegSr sbfCust_PositionTo
+BegFunc sbfCust_PositionTo Type(*Ind) 
     // Position subfile at new location.
-    DclSrParm SrchValue Type( *String )
+    DclSrParm SrchValue Type(*String)
  
-    SetLL Cust Key( SrchValue )
-    If ( %FOUND( Cust ) )
+    SetLL Cust Key(SrchValue)
+    If (%FOUND(Cust))
         sbfCust_Refresh()
         sbfCust.SetFocus()
+        LeaveSr *True 
     Else
-        SetGT Cust Key( Cust_CMName )
-        ioPositionTo.SetFocus()
+        SetGT Cust Key(Cust_CMName)
+        textboxPositionTo.SetFocus()
+        LeaveSr *False 
     EndIf
-EndSr
+EndFunc 
  
 BegSr sbfCust_Refresh
     // Clear subfile, fill from current file position and go to top row.
@@ -695,23 +640,23 @@ BegSr sbfCust_SetInfoDisplay
  
     lblName.Caption      = sbfCust_CMName
     lblAddress.Caption   = sbfCust_CMAddr1
-    lblCSZ.Caption       = %TRIM( sbfCust_CMCity ) + ', ' + sbfCust_CMState
+    lblCSZ.Caption       = %TRIM(sbfCust_CMCity) + ', ' + sbfCust_CMState
 EndSr
  
 // Other subroutines.
-BegFunc SetRowColor Type( *Integer ) Len( 4 )
+BegFunc SetRowColor Type(*Integer) Len(4)
     // Set CurrRow to the opposite of the RowColor specified.
-    DclSrParm CurrRow   Type( *Integer ) Len( 4 )
-    DclSrParm RowColor  Type( *Integer ) Len( 4 )
+    DclSrParm CurrRow   Type(*Integer) Len(4)
+    DclSrParm RowColor  Type(*Integer) Len(4)
  
-    If ( RowColor = lblRowColor1.BackColor )
+    If (RowColor = lblRowColor1.BackColor)
         sbfCust.RecBackColor[ CurrRow ] = lblRowColor2.BackColor
         RowColor                        = lblRowColor2.BackColor
     Else
         sbfCust.RecBackColor[ CurrRow ] = lblRowColor1.BackColor
         RowColor                        = lblRowColor1.BackColor
     EndIf
-    LeaveSr Value( RowColor )
+    LeaveSr Value(RowColor)
 EndFunc
 
 BEGSR buttonNext Click
