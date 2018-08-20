@@ -20,7 +20,7 @@ INITPROP NAME(Strikethrough) TYPE(*BOOLEAN) VALUE(0)
 ENDPROP
 INITPROP NAME(StartUpPosition) TYPE(*INTEGER2) VALUE(1)
 INITPROP NAME(CreationID) TYPE(*BASICSTRING) VALUE('{BE755B52-EDC3-4801-AA40-8FE751378CD2}')
-INITPROP NAME(ModifiedID) TYPE(*BASICSTRING) VALUE('{4A3677FB-36E0-43B4-A4BD-498CB3BCD2EE}')
+INITPROP NAME(ModifiedID) TYPE(*BASICSTRING) VALUE('{5A03FD93-00D1-4335-905F-441C2BDDB6BA}')
 DCLMENU PARENT(formMain) // mnuForm1
 INITPROP NAME(_Version) TYPE(*INTEGER4) VALUE(131176)
 INITPROP NAME(Name) TYPE(*BASICSTRING) VALUE('mnuForm1')
@@ -529,16 +529,15 @@ DclDiskFile  Name(Cust) +
              FileDesc('Examples/CMastNewL2') +
              DBDesc('*PUBLIC/DG NET Local') 
  
-// This externally described data structure 
-//DclDS CustDS  ExtDesc(*Yes) +
-//              FileDesc('Examples/CMastNewL2') +
-//              DBDesc('*PUBLIC/DG NET Local') +
-//              Prefix(Cust_)
+//-DclDS CustDS  ExtDesc(*Yes) +
+//-              FileDesc('Examples/CMastNewL2') +
+//-              DBDesc('*PUBLIC/DG NET Local') +
+//-              Prefix(Cust_)
  
-//DclDS sbfCustDS  ExtDesc(*Yes) +
-//                 FileDesc('Examples/CMastNewL2') +
-//                 DBDesc('*PUBLIC/DG NET Local') +
-//                 Prefix(SbfCust_)
+//-DclDS sbfCustDS  ExtDesc(*Yes) +
+//-                 FileDesc('Examples/CMastNewL2') +
+//-                 DBDesc('*PUBLIC/DG NET Local') +
+//-                 Prefix(SbfCust_)
 
 // This value controls how many rows are presented
 // in the subfile.  
