@@ -20,7 +20,7 @@ INITPROP NAME(Strikethrough) TYPE(*BOOLEAN) VALUE(0)
 ENDPROP
 INITPROP NAME(StartUpPosition) TYPE(*INTEGER2) VALUE(1)
 INITPROP NAME(CreationID) TYPE(*BASICSTRING) VALUE('{BE755B52-EDC3-4801-AA40-8FE751378CD2}')
-INITPROP NAME(ModifiedID) TYPE(*BASICSTRING) VALUE('{5A03FD93-00D1-4335-905F-441C2BDDB6BA}')
+INITPROP NAME(ModifiedID) TYPE(*BASICSTRING) VALUE('{92726BEB-D384-492F-AE38-9507C65A2963}')
 DCLMENU PARENT(formMain) // mnuForm1
 INITPROP NAME(_Version) TYPE(*INTEGER4) VALUE(131176)
 INITPROP NAME(Name) TYPE(*BASICSTRING) VALUE('mnuForm1')
@@ -528,15 +528,17 @@ DclDiskFile  Name(Cust) +
              AddRec(*No) +
              FileDesc('Examples/CMastNewL2') +
              DBDesc('*PUBLIC/DG NET Local') 
+
+//- These data structures aren't used in this program, but provide a 
+//- potential discussion point.  
+//- DclDS CustDS  ExtDesc(*Yes) +
+//-               FileDesc('Examples/CMastNewL2') +
+//-               DBDesc('*PUBLIC/DG NET Local') +
+//-               Prefix(Cust_)
  
-//-DclDS CustDS  ExtDesc(*Yes) +
-//-              FileDesc('Examples/CMastNewL2') +
-//-              DBDesc('*PUBLIC/DG NET Local') +
-//-              Prefix(Cust_)
- 
-//-DclDS sbfCustDS  ExtDesc(*Yes) +
-//-                 FileDesc('Examples/CMastNewL2') +
-//-                 DBDesc('*PUBLIC/DG NET Local') +
+//- DclDS sbfCustDS  ExtDesc(*Yes) +
+//-                  FileDesc('Examples/CMastNewL2') +
+//-                  DBDesc('*PUBLIC/DG NET Local') +
 //-                 Prefix(SbfCust_)
 
 // This value controls how many rows are presented
@@ -637,7 +639,7 @@ EndSr
 BegSr SetLeftButtonsStatus
     DclSrParm Enabled Type(*Ind) 
 
-    // AVR Classic doesn't have an image button. This program uses its 
+    // AVR Classic doesn't have an image button. This program uses the 
     // image control to simulate image buttons. This is a little extra
     // work because you need enabled and disabled images, but it 
     // removes dependence on a third-party button control. See the 
@@ -675,6 +677,7 @@ EndSr
 
 // Show first page of subfile.
 BegSr sbfCust_ShowFirstPage
+    // Position file at top of file.
     SetLL Cust Key(*Start) 
     sbfCust_ShowNextPage()
 EndSr
@@ -713,22 +716,33 @@ EndSr
 
 // Show previous page of subfile.
 BegSr sbfCust_ShowPreviousPage
+    // Read the first row of the subfile to make that row's fields available.
     Chain sbfCust Key(1)  
+    // Position the file at the record in the first row.
     SetLL Cust Key(sbfCust_CMName) 
+    // Read backwards from there. 
     ReadCustOnePageBackwards()
+    // Having read backwards a number of rows and then 
+    // show the page. 
     sbfCust_ShowNextPage()
 EndSr
 
 // Show last page of subfile.
 BegSr sbfCust_ShowLastPage 
-    DclFld SaveName Type(*String) 
-
+    // Position file pointer at end of file.
     SetGT Cust Key(*HiVal)     
+    // Read backwards from there. 
     ReadCustOnePageBackwards()
+    // Having read backwards a number of rows and then 
+    // show the page. 
     sbfCust_ShowNextPage()
 EndSr 
 
-// Move file pointer backwards for previous page display. 
+// Every page (first, previous, next, and last) are displayed 
+// with the sbfCust_ShowNextPage routine. To page through the 
+// file backwards, this routine reads backwards through the file 
+// SUBFILE_ROWS + 1 rows. It does this to position the file 
+// pointer so that sbfCust_ShowNextPage displays the correct page.  
 BegSr ReadCustOnePageBackwards
     DclFld BegOfFile  Type( *Boolean )
 
@@ -762,11 +776,15 @@ BegFunc sbfCust_PositionTo Type(*Ind)
     DclSrParm PositionToValue Type(*String)
     DclFld SaveName Type(*String) 
     
+    // Is position-to value key in the file
     SetLL Cust Key(PositionToValue)
     If (%FOUND(Cust))
+        // If so, show the next page from there.
         sbfCust_ShowNextPage()        
         LeaveSr *True 
     Else
+        // Otherwise, reselect the subfile's top row and 
+        // display a message. 
         sbfCust_GoToTopRow()        
         MsgBox Title('Search results') Msg('No records found')
         textboxPositionTo.SetFocus()
@@ -809,7 +827,8 @@ BegFunc IsEven Type(*Ind)
     LeaveSr Value(%REM(Value, EVEN_DIVISOR) = 0)
 EndFunc  
 
-// Return true if there are more records backward.
+// Return true if there are more records backward, given the 
+// key value on the first row displayed. 
 BegFunc MoreRecordsBack Type(*Ind) 
     Chain sbfCust Key(1)  
     SetLL Cust Key(sbfCust_CMName) 
@@ -818,7 +837,8 @@ BegFunc MoreRecordsBack Type(*Ind)
     LeaveSr Value(NOT %EOF(Cust)) 
 EndFunc 
 
-// Return true if there are more records forward. 
+// Return true if there are more records forward, given the 
+// key value on the last row displayed. 
 BegFunc MoreRecordsForward Type(*Ind) 
     Chain sbfCust Key(sbfCust.RowCount)  
     SetGT Cust Key(sbfCust_CMName) 
