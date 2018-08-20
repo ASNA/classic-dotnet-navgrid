@@ -20,7 +20,7 @@ INITPROP NAME(Strikethrough) TYPE(*BOOLEAN) VALUE(0)
 ENDPROP
 INITPROP NAME(StartUpPosition) TYPE(*INTEGER2) VALUE(1)
 INITPROP NAME(CreationID) TYPE(*BASICSTRING) VALUE('{BE755B52-EDC3-4801-AA40-8FE751378CD2}')
-INITPROP NAME(ModifiedID) TYPE(*BASICSTRING) VALUE('{BC9CB47B-1A5A-47E3-BE42-1FD309BD78F2}')
+INITPROP NAME(ModifiedID) TYPE(*BASICSTRING) VALUE('{6CF3B975-2778-4BD7-93E9-393D74AAACE4}')
 DCLMENU PARENT(formMain) // mnuForm1
 INITPROP NAME(_Version) TYPE(*INTEGER4) VALUE(131176)
 INITPROP NAME(Name) TYPE(*BASICSTRING) VALUE('mnuForm1')
@@ -379,12 +379,12 @@ INITPROP NAME(Underline) TYPE(*BOOLEAN) VALUE(0)
 INITPROP NAME(Italic) TYPE(*BOOLEAN) VALUE(0)
 INITPROP NAME(Strikethrough) TYPE(*BOOLEAN) VALUE(0)
 ENDPROP
-DCLCTL CLSID('{9A541647-88B8-11CF-A6E2-00801E0111FB}') PARENT(formMain) // lblRowColor1
+DCLCTL CLSID('{9A541647-88B8-11CF-A6E2-00801E0111FB}') PARENT(formMain) // labelOddRowColor
 INITPROP NAME(Version) TYPE(*INTEGER4) VALUE(131181)
 INITPROP NAME(_PersistType) TYPE(*INTEGER2) VALUE(3)
 INITPROP NAME(Height) TYPE(*INTEGER4) VALUE(270)
 INITPROP NAME(Left) TYPE(*INTEGER4) VALUE(9900)
-INITPROP NAME(Name) TYPE(*BASICSTRING) VALUE('lblRowColor1')
+INITPROP NAME(Name) TYPE(*BASICSTRING) VALUE('labelOddRowColor')
 INITPROP NAME(Top) TYPE(*INTEGER4) VALUE(90)
 INITPROP NAME(Width) TYPE(*INTEGER4) VALUE(2790)
 INITPROP NAME(TabIndex) TYPE(*INTEGER2) VALUE(7)
@@ -408,12 +408,12 @@ INITPROP NAME(Underline) TYPE(*BOOLEAN) VALUE(0)
 INITPROP NAME(Italic) TYPE(*BOOLEAN) VALUE(0)
 INITPROP NAME(Strikethrough) TYPE(*BOOLEAN) VALUE(0)
 ENDPROP
-DCLCTL CLSID('{9A541647-88B8-11CF-A6E2-00801E0111FB}') PARENT(formMain) // lblRowColor2
+DCLCTL CLSID('{9A541647-88B8-11CF-A6E2-00801E0111FB}') PARENT(formMain) // labelEvenRowColor
 INITPROP NAME(Version) TYPE(*INTEGER4) VALUE(131181)
 INITPROP NAME(_PersistType) TYPE(*INTEGER2) VALUE(3)
 INITPROP NAME(Height) TYPE(*INTEGER4) VALUE(270)
 INITPROP NAME(Left) TYPE(*INTEGER4) VALUE(9900)
-INITPROP NAME(Name) TYPE(*BASICSTRING) VALUE('lblRowColor2')
+INITPROP NAME(Name) TYPE(*BASICSTRING) VALUE('labelEvenRowColor')
 INITPROP NAME(Top) TYPE(*INTEGER4) VALUE(360)
 INITPROP NAME(Width) TYPE(*INTEGER4) VALUE(2790)
 INITPROP NAME(TabIndex) TYPE(*INTEGER2) VALUE(8)
@@ -509,7 +509,7 @@ END
 // [Return to repo](https://github.com/ASNA/classic-dotnet-navgrid)
 // ### AVR Classic program to demonstrate a simple subfile for customer selection.
 // ---
-// ![](screen-shot-01.png?1)
+// ![](screen-shot-01.png)
 // ---
 
 // [See file schema here.](http://1clickurls.com/yT1m-Mq)
@@ -540,30 +540,33 @@ labelName.Caption = ''
 labelAddress.Caption = ''
 labelCSZ.Caption = ''
 
-// Show 
 sbfCust_ShowFirstPage()
  
-// Event handlers
+// End of mainline.
 
+// First page requested.
+BEGSR imageFirstPage Click
+    sbfCust_ShowFirstPage() 
+ENDSR
+
+// Next page requested.
 BEGSR imageNextPage Click
     Chain sbfCust Key(sbfCust.RowCount)
     SetLL Cust Key(sbfCust_CMName) 
     sbfCust_ShowNextPage()
 ENDSR
 
+// Previous page requested. 
 BEGSR imagePreviousPage Click   
     sbfCust_ShowPreviousPage()
 ENDSR
 
+// Last page requested.
 BEGSR imageLastPage Click
     sbfCust_ShowLastPage()  
 ENDSR
 
-BEGSR imageFirstPage Click
-    sbfCust_ShowFirstPage() 
-ENDSR
-
-// Watch for keypress in the textboxPositionTo textbox. 
+// Watch for ENTER key in the textboxPositionTo textbox. 
 BegSr textboxPositionTo KeyPress
     DclSrParm KeyAscii TYPE(*INTEGER) LEN(2) BY(*REFERENCE)
  
@@ -580,26 +583,38 @@ BegSr textboxPositionTo KeyPress
     EndIf
 EndSr
 
+// The current row changed in the subfile. 
 BegSr sbfCust RecSwitch
-    // Row position was changed in the subfile.
-    // Read the current subfile record.
     DclSrParm FromRec  Type(*INTEGER) LEN(4)
  
-    // Read subfile record on every subfile record switch
+    // Read subfile record on every subfile record switch to have
+    // that subfile row's fields available.  The AVR Classic subfile reports 
+    // zero-based row and column values, and the subfile RRN is one based. 
+    // When chaining to the subfile with the subfile Row property, be sure to add 
+    // one to it to 'translate' it to the corresponding RRN.
     Chain sbfCust Key(sbfCust.Row + 1) NotFnd(*In50)
  
-    sbfCust_RRN = sbfCust.RowCount
- 
-    // Fill any detail display output here.
-    ExSr sbfCust_SetInfoDisplay
+    // Populate customer info panel with fields from the 
+    // just-read subfile row. 
+    sbfCust_SetInfoDisplay()
 EndSr
  
+// This subfile event handler fires as the subfile row is changing.
+// The subfile heading is a considered a row, just like the data rows. 
+// The subfile heading row's ordinal position is -1 and the first data row 
+// is zero. If the user moves the current row the entire subfile is 
+// selected and that is very jarring to the user. This code looks to see 
+// if the user attempted to move into the header and moves the row 
+// selected back to the twop row (the zeroth row).
 BegSr sbfCust SelChanging
     // Inhibit user moving to heading row of subfile.
     DclConst  HEADING_ROW   Value(-1)
- 
+
+    // Uncomment this LeaveSr and user move the row to the top of the 
+    // subfile with the `up` arrow key to see the default behavior arrow
+    // key behavior.  
     If (sbfCust.Row = HEADING_ROW)
-        ExSr sbfCust_GoToTopRow
+        sbfCust_GoToTopRow()
     EndIf
 EndSr
 
@@ -609,10 +624,16 @@ BegSr sbfCust_Initialize
     sbfCust.ClearObj()
 EndSr
 
-// 
+// Set the first and previous page buttons' enabled status. 
 BegSr SetLeftButtonsStatus
     DclSrParm Enabled Type(*Ind) 
-    
+
+    // AVR Classic doesn't have an image button. This program uses its 
+    // image control to simulate image buttons. This is a little extra
+    // work because you need enabled and disabled images, but it 
+    // removes dependence on a third-party button control. See the 
+    // note at the bottom of this page to read about a way to create images
+    // for this purpose.     
     If (Enabled)
         LoadPicture File('left-end-arrow.jpg') target(imageFirstPage) 
         LoadPicture File('left-arrow.jpg') target(imagePreviousPage) 
@@ -626,6 +647,7 @@ BegSr SetLeftButtonsStatus
     EndIf  
 EndSr 
 
+// Set next and last page buttons' enabled status. 
 BegSr SetRightButtonsStatus
     DclSrParm Enabled Type(*Ind) 
     
@@ -652,14 +674,13 @@ EndSr
 BegSr sbfCust_ShowNextPage
     // Fill sbfCust with next group of rows from Cust's current 
     // file pointer position.
-    DclFld RowColor   Type(*Integer) Len(4)
 
     sbfCust_Initialize()
 
-    Do FromVal(1) ToVal(SUBFILE_ROWS) //Index(Idx)
+    Do FromVal(1) ToVal(SUBFILE_ROWS)
         Read Cust
         If (%EOF(Cust))
-            LeaveSr
+            Leave
         EndIf
         // Assign fields from the Cust file to the 
         // subfile. 
@@ -669,9 +690,10 @@ BegSr sbfCust_ShowNextPage
         sbfCust_CMCity = Cust_CMCity
         sbfCust_CMState = Cust_CMState
         sbfCust_CMPostCode = Cust_CMPostCode
+        // Write the subfile row.
         Write sbfCust
 
-        RowColor = SetRowColor(sbfCust_RRN - 1, RowColor)
+        SetRowColor(sbfCust_RRN - 1)
     EndDo
 
     SetLeftButtonsStatus(MoreRecordsBack())
@@ -758,21 +780,26 @@ BegSr sbfCust_SetInfoDisplay
                              sbfCust_CMPostCode
 EndSr
  
-// Other subroutines.
-BegFunc SetRowColor Type(*Integer) Len(4)
-    // Set CurrRow to the opposite of the RowColor specified.
-    DclSrParm CurrRow   Type(*Integer) Len(4)
-    DclSrParm RowColor  Type(*Integer) Len(4)
- 
-    If (RowColor = lblRowColor1.BackColor)
-        sbfCust.RecBackColor[ CurrRow ] = lblRowColor2.BackColor
-        RowColor                        = lblRowColor2.BackColor
+// Set subfile row color.
+BegSr SetRowColor 
+    DclSrParm CurrentRow   Type(*Integer) Len(4)
+
+    If IsEven(CurrentRow)
+        sbfCust.RecBackColor[CurrentRow] = labelEvenRowColor.BackColor
     Else
-        sbfCust.RecBackColor[ CurrRow ] = lblRowColor1.BackColor
-        RowColor                        = lblRowColor1.BackColor
+        sbfCust.RecBackColor[CurrentRow] = labelOddRowColor.BackColor
     EndIf
-    LeaveSr Value(RowColor)
-EndFunc
+EndSr
+
+// Return remainder of integer division.
+BegFunc IsEven Type(*Ind) 
+    DclSrParm Value Type(*Integer) Len(4) 
+
+    DclConst EVEN_DIVISOR Value(2) 
+
+    LeaveSr Value(%REM(Value, EVEN_DIVISOR) = 0)
+EndFunc  
+
 
 // Return true if there are more records backward.
 BegFunc MoreRecordsBack Type(*Ind) 
@@ -790,24 +817,27 @@ BegFunc MoreRecordsForward Type(*Ind)
     LeaveSr %Found(Cust) 
 EndFunc 
 
+// Poll for 'f', 'p', 'n', and 'l' keypresses to behave as accelerator keys 
+// for the corresponding subfile page actions. 
 BEGSR sbfCust KeyPress
     DclSrParm KeyAscii TYPE(*INTEGER) LEN(2) BY(*REFERENCE)
-
-    DclConst LOWER_P_KEY Value(112)
+    
+    DclConst LOWER_F_KEY Value(102)
     DclConst LOWER_N_KEY Value(110)
+    DclConst LOWER_P_KEY Value(112)
+    DclConst LOWER_L_KEY Value(108)
 
-    If KeyAscii = LOWER_P_KEY
-        //sbfCust_Initialize()
-        sbfCust_ShowPreviousPage()
-        //sbfCust_GoToTopRow()
-        //sbfCust.SetFocus()          
-    Else 
-        If KeyAscii = LOWER_N_KEY 
-            //sbfCust_Initialize()
-            sbfCust_ShowNextPage()
-            //sbfCust_GoToTopRow()
-            //sbfCust.SetFocus()  
-        EndIf 
-    EndIf         
-    //    MsgBox KeyAscii 
+    Case Cond(KeyAscii = LOWER_F_KEY) Sr(sbfCust_ShowFirstPage) 
+    Case Cond(KeyAscii = LOWER_P_KEY) Sr(sbfCust_ShowPreviousPage) 
+    Case Cond(KeyAscii = LOWER_N_KEY) Sr(sbfCust_ShowNextPage) 
+    Case Cond(KeyAscii = LOWER_L_KEY) Sr(sbfCust_ShowLastPage) 
+    EndCs
 ENDSR
+
+// ### Creating images for AVR class'c image control. 
+// The [FontAwesome](https://fontawesome.com/icons) site provides free SVG 
+// images for Web development. SVG images aren't much help to AVR Classic, 
+// but the [fa2png](http://fa2png.io/) site freely translates a FontAwesome
+// SVG to a PNG. Create a 32px PNG with the fa2png site, then use MS Paint 
+// to save that PNG as a JPG. (AVR Classic's Image control doesn't work with 
+// PNG files. 
