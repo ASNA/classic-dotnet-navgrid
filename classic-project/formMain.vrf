@@ -20,7 +20,7 @@ INITPROP NAME(Strikethrough) TYPE(*BOOLEAN) VALUE(0)
 ENDPROP
 INITPROP NAME(StartUpPosition) TYPE(*INTEGER2) VALUE(1)
 INITPROP NAME(CreationID) TYPE(*BASICSTRING) VALUE('{BE755B52-EDC3-4801-AA40-8FE751378CD2}')
-INITPROP NAME(ModifiedID) TYPE(*BASICSTRING) VALUE('{6CF3B975-2778-4BD7-93E9-393D74AAACE4}')
+INITPROP NAME(ModifiedID) TYPE(*BASICSTRING) VALUE('{71847A05-E840-4DC7-B6AB-43CA74E05EE1}')
 DCLMENU PARENT(formMain) // mnuForm1
 INITPROP NAME(_Version) TYPE(*INTEGER4) VALUE(131176)
 INITPROP NAME(Name) TYPE(*BASICSTRING) VALUE('mnuForm1')
@@ -510,6 +510,12 @@ END
 // ### AVR Classic program to demonstrate a simple subfile for customer selection.
 // ---
 // ![](screen-shot-01.png)
+// 
+// This program shows a simple page-at-a-time subfile that would be used 
+// for navigation through a file. Once a row is located, the user would initiate 
+// an action. That action isn't show in the is example; this example focuses on 
+// populating and navigating the subfile. 
+
 // ---
 
 // [See file schema here.](http://1clickurls.com/yT1m-Mq)
@@ -524,16 +530,18 @@ DclDiskFile  Name(Cust) +
              DBDesc('*PUBLIC/DG NET Local') 
  
 // This externally described data structure 
-DclDS CustDS  ExtDesc(*Yes) +
-              FileDesc('Examples/CMastNewL2') +
-              DBDesc('*PUBLIC/DG NET Local') +
-              Prefix(Cust_)
+//DclDS CustDS  ExtDesc(*Yes) +
+//              FileDesc('Examples/CMastNewL2') +
+//              DBDesc('*PUBLIC/DG NET Local') +
+//              Prefix(Cust_)
  
-DclDS sbfCustDS  ExtDesc(*Yes) +
-                 FileDesc('Examples/CMastNewL2') +
-                 DBDesc('*PUBLIC/DG NET Local') +
-                 Prefix(SbfCust_)
- 
+//DclDS sbfCustDS  ExtDesc(*Yes) +
+//                 FileDesc('Examples/CMastNewL2') +
+//                 DBDesc('*PUBLIC/DG NET Local') +
+//                 Prefix(SbfCust_)
+
+// This value controls how many rows are presented
+// in the subfile.  
 DclConst SUBFILE_ROWS Value(12)
  
 labelName.Caption = ''
@@ -618,6 +626,8 @@ BegSr sbfCust SelChanging
     EndIf
 EndSr
 
+// Clear the subfile and set its RRN to zero--making it ready for a 
+// a new page. 
 BegSr sbfCust_Initialize
     // Initialize and clear subfile.
     sbfCust_RRN = 0
@@ -799,7 +809,6 @@ BegFunc IsEven Type(*Ind)
 
     LeaveSr Value(%REM(Value, EVEN_DIVISOR) = 0)
 EndFunc  
-
 
 // Return true if there are more records backward.
 BegFunc MoreRecordsBack Type(*Ind) 
