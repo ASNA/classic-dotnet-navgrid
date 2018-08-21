@@ -26,27 +26,25 @@ def processLines(lines):
     controlName = ''
     for line in lines:
         # matchObj = re.match(r'^DCL', line)
-        matchObj = re.match(r'^DCL.*\/\/\s*(.*)?$', line)        
-        if matchObj:
+        startsWithDCLCTL = re.match(r'^DCL.*\/\/\s*(.*)?$', line)        
+        if startsWithDCLCTL:
             state = State.inControl
-            controlName = matchObj.group(1) 
+            controlName = startsWithDCLCTL.group(1) 
             print('---------------------------')
             print(controlName)
-            inControl = True 
             continue
+
         if state == State.inControl:             
-            matchObj = re.match(r'^INITPROP.*NAME\((.*?)[)].*TYPE\((.*?)[)].*VALUE\((.*?)[)]', line)
-            if matchObj:
-                propName = matchObj.group(1)                
+            startsWithINITPROP = re.match(r'^INITPROP.*NAME\((.*?)[)].*TYPE\((.*?)[)].*VALUE\((.*?)[)]', line)
+            if startsWithINITPROP:
+                propName = startsWithINITPROP.group(1)                
                 if not propName.startswith('_') and not propName in reservedPropertyNames:
-                    propType = matchObj.group(2)                
-                    propValue = matchObj.group(3)                
-                    # print(propName + ' : '+ propType + ' : ' + propValue)
+                    propType = startsWithINITPROP.group(2)                
+                    propValue = startsWithINITPROP.group(3)                
                     print(propName + ' = '+ propValue)
-                # line = line.replace('\n','')                
-                # print(line)
-        matchObj = re.match(r'^ENDPROP', line)
-        if matchObj:
+
+        startsWithENDPROP = re.match(r'^ENDPROP', line)
+        if startsWithDCLCTL:
             state = State.limbo
 
 if len(sys.argv) == 1:
