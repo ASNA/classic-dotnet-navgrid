@@ -19,8 +19,7 @@
       </div>
       <p><a href="https://github.com/ASNA/classic-dotnet-navgrid">Return to repo</a></p>
 <h3>AVR Classic program to demonstrate a simple subfile for customer selection.</h3>
-<p><a href="formMain.vrf.controls.html">Show controls list and their properties.</a>
-</p>
+<h4><a href="formMain.vrf.controls.html">Show controls list and their properties.</a></h4>
 <hr />
 <p><img alt="" src="screen-shot-01.png?4" /></p>
 <p>This program shows a simple page-at-a-time subfile that would be used 
@@ -438,7 +437,8 @@ file pointer position.</p>
         <span class="nx">Read</span> <span class="nx">Cust</span>
         <span class="nx">If</span> <span class="p">(</span><span class="o">%</span><span class="nx">EOF</span><span class="p">(</span><span class="nx">Cust</span><span class="p">))</span>
             <span class="nx">Leave</span>
-        <span class="nx">EndIf</span></pre></div>
+        <span class="nx">EndIf</span>
+        <span class="nx">sbfCust_AssignFields</span><span class="p">()</span></pre></div>
     </div>
   </div>
   <div class='clearall'></div>
@@ -446,24 +446,6 @@ file pointer position.</p>
     <div class='docs'>
       <div class='octowrap'>
         <a class='octothorpe' href='#section-26'>#</a>
-      </div>
-      <p>Assign fields from the Cust file to the 
-subfile. </p>
-    </div>
-    <div class='code'>
-      <div class="highlight"><pre>        <span class="nx">sbfCust_RRN</span> <span class="o">=</span> <span class="nx">sbfCust</span><span class="p">.</span><span class="nx">RowCount</span> <span class="o">+</span> <span class="mi">1</span>
-        <span class="nx">sbfCust_CMName</span> <span class="o">=</span> <span class="nx">Cust_CMName</span>
-        <span class="nx">sbfCust_CMAddr1</span> <span class="o">=</span> <span class="nx">Cust_CMAddr1</span>
-        <span class="nx">sbfCust_CMCity</span> <span class="o">=</span> <span class="nx">Cust_CMCity</span>
-        <span class="nx">sbfCust_CMState</span> <span class="o">=</span> <span class="nx">Cust_CMState</span>
-        <span class="nx">sbfCust_CMPostCode</span> <span class="o">=</span> <span class="nx">Cust_CMPostCode</span></pre></div>
-    </div>
-  </div>
-  <div class='clearall'></div>
-  <div class='section' id='section-27'>
-    <div class='docs'>
-      <div class='octowrap'>
-        <a class='octothorpe' href='#section-27'>#</a>
       </div>
       <p>Write the subfile row.</p>
     </div>
@@ -477,6 +459,27 @@ subfile. </p>
     <span class="nx">SetRightButtonsStatus</span><span class="p">(</span><span class="nx">MoreRecordsForward</span><span class="p">())</span>
     <span class="nx">sbfCust_GoToTopRow</span><span class="p">()</span>    
     <span class="nx">sbfCust</span><span class="p">.</span><span class="nx">SetFocus</span><span class="p">()</span>
+<span class="nx">EndSr</span>
+
+<span class="nx">BegSr</span> <span class="nx">sbfCust_AssignFields</span></pre></div>
+    </div>
+  </div>
+  <div class='clearall'></div>
+  <div class='section' id='section-27'>
+    <div class='docs'>
+      <div class='octowrap'>
+        <a class='octothorpe' href='#section-27'>#</a>
+      </div>
+      <p>Assign fields from the Cust file to the 
+subfile. </p>
+    </div>
+    <div class='code'>
+      <div class="highlight"><pre>    <span class="nx">sbfCust_RRN</span> <span class="o">=</span> <span class="nx">sbfCust</span><span class="p">.</span><span class="nx">RowCount</span> <span class="o">+</span> <span class="mi">1</span>
+    <span class="nx">sbfCust_CMName</span> <span class="o">=</span> <span class="nx">Cust_CMName</span>
+    <span class="nx">sbfCust_CMAddr1</span> <span class="o">=</span> <span class="nx">Cust_CMAddr1</span>
+    <span class="nx">sbfCust_CMCity</span> <span class="o">=</span> <span class="nx">Cust_CMCity</span>
+    <span class="nx">sbfCust_CMState</span> <span class="o">=</span> <span class="nx">Cust_CMState</span>
+    <span class="nx">sbfCust_CMPostCode</span> <span class="o">=</span> <span class="nx">Cust_CMPostCode</span>
 <span class="nx">EndSr</span></pre></div>
     </div>
   </div>
