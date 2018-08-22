@@ -27,6 +27,9 @@ do
 		python ..\\..\\prep-for-classic-pycco.py $f
 		pycco $f.annotated -d ..\\docs\\classic -l javascript 
 		rm $f.annotated		
+		
+		python ..\\..\\..extract-props-from-classic.py $f
+		mv $f.controls.txt ..//docs//classic 
     else
 	    echo "File $f does not exist"
 	fi	
