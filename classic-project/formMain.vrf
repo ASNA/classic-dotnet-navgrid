@@ -3,12 +3,12 @@ DCLFORM // formMain
 INITPROP NAME(_Version) TYPE(*INTEGER4) VALUE(131181)
 INITPROP NAME(BorderStyle) TYPE(*INTEGER2) VALUE(1)
 INITPROP NAME(Caption) TYPE(*BASICSTRING) VALUE('Navigation subfile example')
-INITPROP NAME(Height) TYPE(*INTEGER4) VALUE(8985)
-INITPROP NAME(Left) TYPE(*INTEGER4) VALUE(6210)
+INITPROP NAME(Height) TYPE(*INTEGER4) VALUE(8265)
+INITPROP NAME(Left) TYPE(*INTEGER4) VALUE(8100)
 INITPROP NAME(MaxButton) TYPE(*BOOLEAN) VALUE(0)
 INITPROP NAME(Name) TYPE(*BASICSTRING) VALUE('formMain')
-INITPROP NAME(Top) TYPE(*INTEGER4) VALUE(3240)
-INITPROP NAME(Width) TYPE(*INTEGER4) VALUE(13200)
+INITPROP NAME(Top) TYPE(*INTEGER4) VALUE(3555)
+INITPROP NAME(Width) TYPE(*INTEGER4) VALUE(13185)
 DCLPROP NAME(Font) TYPE(*BLOBPROPSET) CLSID('{0BE35203-8F91-11CE-9DE3-00AA004BB851}')
 INITPROP NAME(Name) TYPE(*BASICSTRING) VALUE('MS Sans Serif')
 INITPROP NAME(Size) TYPE(*CURRENCY) VALUE('9.75')
@@ -20,7 +20,7 @@ INITPROP NAME(Strikethrough) TYPE(*BOOLEAN) VALUE(0)
 ENDPROP
 INITPROP NAME(StartUpPosition) TYPE(*INTEGER2) VALUE(1)
 INITPROP NAME(CreationID) TYPE(*BASICSTRING) VALUE('{BE755B52-EDC3-4801-AA40-8FE751378CD2}')
-INITPROP NAME(ModifiedID) TYPE(*BASICSTRING) VALUE('{E35A6BBD-DD25-4C5B-997B-AC175D95ED37}')
+INITPROP NAME(ModifiedID) TYPE(*BASICSTRING) VALUE('{705A5E53-E3E9-4CA9-8B5F-CCB87F96AC5B}')
 DCLMENU PARENT(formMain) // mnuForm1
 INITPROP NAME(_Version) TYPE(*INTEGER4) VALUE(131176)
 INITPROP NAME(Name) TYPE(*BASICSTRING) VALUE('mnuForm1')
@@ -57,9 +57,11 @@ INITPROP NAME(ButtonHeight) TYPE(*INTEGER4) VALUE(380)
 INITPROP NAME(ButtonWidth) TYPE(*INTEGER4) VALUE(300)
 INITPROP NAME(HScroll) TYPE(*BOOLEAN) VALUE(0)
 INITPROP NAME(VScroll) TYPE(*BOOLEAN) VALUE(0)
-INITPROP NAME(NoHideSel) TYPE(*BOOLEAN) VALUE(-1)
-INITPROP NAME(NoLines) TYPE(*BOOLEAN) VALUE(-1)
-INITPROP NAME(SingleSelect) TYPE(*BOOLEAN) VALUE(-1)
+INITPROP NAME(Browse) TYPE(*BOOLEAN) VALUE(1)
+INITPROP NAME(NoHideSel) TYPE(*BOOLEAN) VALUE(255)
+INITPROP NAME(NoLines) TYPE(*BOOLEAN) VALUE(255)
+INITPROP NAME(SingleSelect) TYPE(*BOOLEAN) VALUE(255)
+INITPROP NAME(WholeRows) TYPE(*BOOLEAN) VALUE(1)
 INITPROP NAME(RRNFldName) TYPE(*BASICSTRING) VALUE('sbfCust_RRN')
 DCLPROP NAME(Fields) TYPE(*BLOBPROPSET) CLSID('{C263D36E-452D-4934-8E90-141DD8DECC1D}')
 INITPROP NAME(Name0) TYPE(*BASICSTRING) VALUE('sbfCust_CMCustno')
@@ -82,7 +84,7 @@ INITPROP NAME(Type1) TYPE(*INTEGER2) VALUE(0)
 INITPROP NAME(IntegralCount1) TYPE(*INTEGER2) VALUE(40)
 INITPROP NAME(DecimalCount1) TYPE(*INTEGER2) VALUE(0)
 INITPROP NAME(ColHeading1) TYPE(*BASICSTRING) VALUE('Name')
-INITPROP NAME(ColWidth1) TYPE(*INTEGER2) VALUE(6500)
+INITPROP NAME(ColWidth1) TYPE(*INTEGER2) VALUE(6495)
 INITPROP NAME(EditCode1) TYPE(*INTEGER2) VALUE(0)
 INITPROP NAME(EditWord1) TYPE(*BASICSTRING) VALUE('')
 INITPROP NAME(Browse1) TYPE(*BOOLEAN) VALUE(0)
@@ -268,7 +270,7 @@ INITPROP NAME(Underline) TYPE(*BOOLEAN) VALUE(0)
 INITPROP NAME(Italic) TYPE(*BOOLEAN) VALUE(0)
 INITPROP NAME(Strikethrough) TYPE(*BOOLEAN) VALUE(0)
 ENDPROP
-INITPROP NAME(AutoSize) TYPE(*BOOLEAN) VALUE(-1)
+INITPROP NAME(AutoSize) TYPE(*BOOLEAN) VALUE(255)
 INITPROP NAME(UseMnemonic) TYPE(*BOOLEAN) VALUE(0)
 DCLCTL CLSID('{9A541647-88B8-11CF-A6E2-00801E0111FB}') PARENT(Frame2) // labelAddress
 INITPROP NAME(Version) TYPE(*INTEGER4) VALUE(131181)
@@ -297,7 +299,7 @@ INITPROP NAME(Underline) TYPE(*BOOLEAN) VALUE(0)
 INITPROP NAME(Italic) TYPE(*BOOLEAN) VALUE(0)
 INITPROP NAME(Strikethrough) TYPE(*BOOLEAN) VALUE(0)
 ENDPROP
-INITPROP NAME(AutoSize) TYPE(*BOOLEAN) VALUE(-1)
+INITPROP NAME(AutoSize) TYPE(*BOOLEAN) VALUE(255)
 DCLCTL CLSID('{9A541647-88B8-11CF-A6E2-00801E0111FB}') PARENT(Frame2) // labelCSZ
 INITPROP NAME(Version) TYPE(*INTEGER4) VALUE(131181)
 INITPROP NAME(_PersistType) TYPE(*INTEGER2) VALUE(3)
@@ -325,7 +327,7 @@ INITPROP NAME(Underline) TYPE(*BOOLEAN) VALUE(0)
 INITPROP NAME(Italic) TYPE(*BOOLEAN) VALUE(0)
 INITPROP NAME(Strikethrough) TYPE(*BOOLEAN) VALUE(0)
 ENDPROP
-INITPROP NAME(AutoSize) TYPE(*BOOLEAN) VALUE(-1)
+INITPROP NAME(AutoSize) TYPE(*BOOLEAN) VALUE(255)
 DCLCTL CLSID('{9A54164F-88B8-11CF-A6E2-00801E0111FB}') PARENT(formMain) // Frame1
 INITPROP NAME(Version) TYPE(*INTEGER4) VALUE(131181)
 INITPROP NAME(_PersistType) TYPE(*INTEGER2) VALUE(3)
@@ -564,7 +566,7 @@ ENDSR
 // Next page requested.
 BEGSR imageNextPage Click
     Chain sbfCust Key(sbfCust.RowCount)
-    SetLL Cust Key(sbfCust_CMName) 
+    SetGT Cust Key(sbfCust_CMName) 
     sbfCust_ShowNextPage()
 ENDSR
 
@@ -678,6 +680,17 @@ BegSr SetRightButtonsStatus
     EndIf  
 EndSr 
 
+BegSr sbfCust_AssignFields
+    // Assign fields from the Cust file to the 
+    // subfile. 
+    sbfCust_RRN = sbfCust.RowCount + 1
+    sbfCust_CMName = Cust_CMName
+    sbfCust_CMAddr1 = Cust_CMAddr1
+    sbfCust_CMCity = Cust_CMCity
+    sbfCust_CMState = Cust_CMState
+    sbfCust_CMPostCode = Cust_CMPostCode
+EndSr
+
 // Show first page of subfile.
 BegSr sbfCust_ShowFirstPage
     // Position file at top of file.
@@ -704,32 +717,28 @@ BegSr sbfCust_ShowNextPage
         SetRowColor(sbfCust_RRN - 1)
     EndDo
 
+    // Set the enabled/disabled status of the 
+    // image buttons. 
     SetLeftButtonsStatus(MoreRecordsBack())
     SetRightButtonsStatus(MoreRecordsForward())
+    // Explicitly set the subfile to top row (which
+    // implicitly refreshes the customer info
+    // at the top of the form.)
     sbfCust_GoToTopRow()    
+    // Give focus to the subfile so its speed keys are in effect.
     sbfCust.SetFocus()
 EndSr
-
-BegSr sbfCust_AssignFields
-    // Assign fields from the Cust file to the 
-    // subfile. 
-    sbfCust_RRN = sbfCust.RowCount + 1
-    sbfCust_CMName = Cust_CMName
-    sbfCust_CMAddr1 = Cust_CMAddr1
-    sbfCust_CMCity = Cust_CMCity
-    sbfCust_CMState = Cust_CMState
-    sbfCust_CMPostCode = Cust_CMPostCode
-EndSr
-
 
 // Show previous page of subfile.
 BegSr sbfCust_ShowPreviousPage
     // Read the first row of the subfile to make that row's fields available.
     Chain sbfCust Key(1)  
     // Position the file at the record in the first row.
-    SetLL Cust Key(sbfCust_CMName) 
+    SetLL Cust Key(sbfCust_CMName) Err(*Extended) 
     // Read backwards from there. 
     ReadCustOnePageBackwards()
+
+   
     // Having read backwards a number of rows and then 
     // show the page. 
     sbfCust_ShowNextPage()
@@ -757,10 +766,10 @@ BegSr ReadCustOnePageBackwards
     Do FromVal(1) ToVal(SUBFILE_ROWS + 1)
         ReadP Cust BOF(BegOfFile)
         If BegOfFile
-            Leave
+            SetLL Cust Key(*Start) 
         EndIf
     EndDo
-EndSr 
+EndSr
 
 // Position populated subfile at top row (the zeroth row). 
 BegSr sbfCust_GoToTopRow
