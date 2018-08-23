@@ -20,7 +20,7 @@ INITPROP NAME(Strikethrough) TYPE(*BOOLEAN) VALUE(0)
 ENDPROP
 INITPROP NAME(StartUpPosition) TYPE(*INTEGER2) VALUE(1)
 INITPROP NAME(CreationID) TYPE(*BASICSTRING) VALUE('{BE755B52-EDC3-4801-AA40-8FE751378CD2}')
-INITPROP NAME(ModifiedID) TYPE(*BASICSTRING) VALUE('{705A5E53-E3E9-4CA9-8B5F-CCB87F96AC5B}')
+INITPROP NAME(ModifiedID) TYPE(*BASICSTRING) VALUE('{110FB46F-348F-4229-8F1A-0505ECBDCDA8}')
 DCLMENU PARENT(formMain) // mnuForm1
 INITPROP NAME(_Version) TYPE(*INTEGER4) VALUE(131176)
 INITPROP NAME(Name) TYPE(*BASICSTRING) VALUE('mnuForm1')
@@ -513,7 +513,8 @@ END
 // ### AVR Classic program to demonstrate a simple subfile for customer selection.
 //
 // #### [Show controls list and their properties.](formMain.vrf.controls.html)
-// [See file schema here.](http://1clickurls.com/yT1m-Mq)// ---
+// [See file schema here.](http://1clickurls.com/yT1m-Mq)
+//
 // ![](screen-shot-01.png?4)
 // 
 // This program shows a simple page-at-a-time subfile that would be used 
